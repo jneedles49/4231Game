@@ -3,6 +3,8 @@
 
 ## Gifs of Progress
 
+![Object_Manipulation](https://github.com/jneedles49/4231Game/assets/150978475/d66dd453-6df1-4c89-bdcd-4d7838d3f351)
+
 
 # TODO
 
