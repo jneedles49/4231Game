@@ -7,24 +7,44 @@ using UnityEngine.UIElements;
 
 public class Obj_Interaction : MonoBehaviour
 {
-    public GameObject cube;
-    public Camera mainCamera;
-    public Vector3 pos;
+
+    #region Character Attributes
+    
+    [Header ("Character Attributes")]
+    
+    [SerializeField] private Camera mainCamera;
+    private Vector3 pos;
     public readonly float playerInteractionRadius = 2.0f;
     private int objectLayerMask = 1 << 6;
     public Ray interactRay;
     private RaycastHit hit;
     private float mouseClickCooldown_remaining = 0f;
-    private readonly float mouseClickCooldown = 1.0f;
+    [SerializeField]private readonly float mouseClickCooldown = 1.0f;
+
+    #endregion
+
+    #region Object Interaction
+
     private bool holdingObj = false;
-    GameObject obj;
+    private GameObject obj;
+
+    #endregion
+
+    #region HUD
+
+    [Header ("HUD")]
+
     public GameObject reticle;
     private RectTransform reticleTransform;
     private RawImage reticleColor;
-    private readonly Color HighlightColor = Color.white;
-    private readonly Color normalColor = Color.grey;
+
+    [SerializeField]private readonly Color HighlightColor = Color.white;
+    [SerializeField]private readonly Color normalColor = Color.grey;
+
     private readonly Vector3 ReticleMaxSize = new Vector3(.3f,.3f,.3f);
     private readonly Vector3 ReticleMinSize = new Vector3(.15f,.15f,.15f);
+
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +63,8 @@ public class Obj_Interaction : MonoBehaviour
 
         //is a ray that projects from the center of the screen, no matter the resolution
         interactRay = mainCamera.ScreenPointToRay(pos);
+
+        #region Dynamic Reticle Changing
 
         //Looking to see if ray hits an interactable object
         if (Physics.Raycast(interactRay, playerInteractionRadius, objectLayerMask) || holdingObj)
@@ -66,6 +88,10 @@ public class Obj_Interaction : MonoBehaviour
             }
 
         }
+
+        #endregion
+
+        #region Object interaction
 
         //If the player clicks the left mouse button and the physics raycast hits a collider on physics layer 6 then we enter into the if statement
         if (Input.GetMouseButton(0) && mouseClickCooldown_remaining == 0.0f)
@@ -101,6 +127,10 @@ public class Obj_Interaction : MonoBehaviour
             }
         }
 
+        #endregion
+
+
+        #region Click Cooldown
 
         //if the left mouse click cooldown is greater than zero than we dercement the cooldown 
         if (mouseClickCooldown_remaining > 0.0f)
@@ -110,6 +140,8 @@ public class Obj_Interaction : MonoBehaviour
         }
         //if the cooldown somehow gets below 0 than we just est it to zero
         else if (mouseClickCooldown_remaining < 0.0f) mouseClickCooldown_remaining = 0.0f;
+        
+        #endregion
 
         Debug.DrawRay(interactRay.origin, interactRay.direction * playerInteractionRadius, Color.blue);
 

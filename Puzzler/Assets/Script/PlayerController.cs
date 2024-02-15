@@ -6,15 +6,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public Camera main_cam; 
+    [Header("Player Attributes")]
+
+    [SerializeField] private Camera main_cam; 
     private CharacterController playerController;
-    public float speed = 7.5f;
-    public float lookSensitivity = 2.0f;
-    public float lookXlimit = 45.0f;
+    [SerializeField] private float speed = 7.5f;
+    [SerializeField] private float lookSensitivity = 2.0f;
+    [SerializeField] private float lookXlimit = 45.0f;
     float rotation_x = 0;
     float gravity = 20.0f;
     Vector3 MoveDirection = Vector3.zero;
-    public Vector3 holdPos;
 
     // Start is called before the first frame update
     void Start()
@@ -53,8 +54,6 @@ public class PlayerController : MonoBehaviour
         rotation_x = Mathf.Clamp(rotation_x, -lookXlimit, lookXlimit);
         main_cam.transform.localRotation = Quaternion.Euler(rotation_x,0,0);
         transform.rotation *= Quaternion.Euler(0,Input.GetAxis("Mouse X") * lookSensitivity, 0);
-
-        holdPos = new Vector3();
 
     }
 }

@@ -9,7 +9,6 @@ public class PickupBehavior : MonoBehaviour
     private GameObject player;
     private Vector3 holdPos;
     private float holdForceMult = 0.5f;
-
     private Rigidbody rg;
 
     // Start is called before the first frame update
@@ -23,6 +22,8 @@ public class PickupBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        #region Object movement constraints
+
         //This isn't a perfect way to clamp the objects postition but it's getting there
         if (pickedUp)
         {
@@ -30,9 +31,15 @@ public class PickupBehavior : MonoBehaviour
             //we do this by creating a new vector which is the objects postion clamped to within 2.1 units of the player
                 //The issue is that for some reason the transform get's clamped to the max value too much? that it inverts to the lowest value
             this.transform.position = new Vector3(
-                Mathf.Clamp(this.transform.position.x, player.transform.position.x - 2.1f, player.transform.position.x + 2.1f),
-                Mathf.Clamp(this.transform.position.y, player.transform.position.y - 2.1f, player.transform.position.y + 2.1f),
-                Mathf.Clamp(this.transform.position.z, player.transform.position.z - 2.1f, player.transform.position.z + 2.1f)
+                Mathf.Clamp(this.transform.position.x, player.transform.position.x - 2.5f, player.transform.position.x + 2.5f),
+                Mathf.Clamp(this.transform.position.y, player.transform.position.y - 2.5f, player.transform.position.y + 2.5f),
+                Mathf.Clamp(this.transform.position.z, player.transform.position.z - 2.5f, player.transform.position.z + 2.5f)
+            );
+
+            rg.velocity = new Vector3(
+                Mathf.Clamp(rg.velocity.x, -5.0f, 5.0f),
+                Mathf.Clamp(rg.velocity.y, -5.0f, 5.0f),
+                Mathf.Clamp(rg.velocity.z, -5.0f, 5.0f)
             );
 
             this.transform.rotation = new Quaternion(0,0,0,0);
@@ -40,9 +47,13 @@ public class PickupBehavior : MonoBehaviour
             //Debug.Log("Velocity: " + rg.velocity);
 
         }
+
+        #endregion
     }
 
     void FixedUpdate(){
+
+        #region Object movement
 
         //We don't have to worry about the player var not being set since it will have to be instantated by the time it gets here
         //There is a potential edge-case if we destroy the player so let's just not
@@ -65,25 +76,28 @@ public class PickupBehavior : MonoBehaviour
             //Think of this as the direction to hold position with the object moving at MAX speed.
             Vector3 holdForce = directionToHoldPos*holdForceMult;
 
+
             //This is self explanatory 
             float distanceToHoldPos = Vector3.Distance(holdPos, this.transform.position);
-            float distanceFromPlayer = Vector3.Distance(player.transform.position, this.transform.position);
 
             //Clamping the value, so we adjust objects' translation speed based on the distance 
-            distanceToHoldPos = Mathf.Clamp(distanceToHoldPos, 0.0f, 1.0f);
+            float clampedDistance = Mathf.Clamp(distanceToHoldPos, 0.0f, 1.0f);
 
-            holdForce *= distanceToHoldPos;
-            if(distanceToHoldPos < .5f){
-
-                rg.MovePosition(holdPos * distanceToHoldPos);
-
-            }
-            else rg.AddForce(holdForce,ForceMode.VelocityChange);
+            //Debug.Log("Interactable Object, Distance to Hold Postion: " + distanceToHoldPos);
 
 
-            //rg.MovePosition(holdPos);
-             
+            //We influence the hold force by both the actual distance and the clamped distance to achieve a slighty better feel
+            holdForce *= (distanceToHoldPos * .5f) + (clampedDistance * .5f);
+
+            //Debug.Log("Hold Force: " + holdForce);
+
+            //If object is close enough to the hold position we just translate right to it. Not Perfect but good enough
+            if(clampedDistance > .45)rg.AddForce(holdForce,ForceMode.VelocityChange);
+            else rg.MovePosition(holdPos);
+
         }
+
+        #endregion
 
 
 
