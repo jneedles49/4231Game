@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class PickupBehavior : MonoBehaviour
 {
     private bool pickedUp = false;
@@ -11,11 +12,16 @@ public class PickupBehavior : MonoBehaviour
     private float holdForceMult = 0.5f;
     private Rigidbody rg;
 
+    [Header ("Audio")]
+    private AudioSource audioController;
+    [SerializeField] private AudioClip CollisionSound;
+
     // Start is called before the first frame update
     void Start()
     {
 
         rg = GetComponent<Rigidbody>();
+        audioController = GetComponent<AudioSource>();
         
     }
 
@@ -112,6 +118,19 @@ public class PickupBehavior : MonoBehaviour
         //rg.useGravity = !rg.useGravity;
         this.player = player;
         //Debug.Log("You picked up the object!");
+    }
+
+    private void OnTriggerEnter(Collider other) {
+
+        audioController.clip = CollisionSound;
+        playCollisionSound();
+
+    }
+
+    public void playCollisionSound(){
+
+        if(!audioController.isPlaying) audioController.Play();
+
     }
 
 }

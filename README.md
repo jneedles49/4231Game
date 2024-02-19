@@ -7,6 +7,7 @@
 
 > Need to finish tutorial level
 - Put Player character in as prefab to use in scene.
+- Refactor Scripts to operate under the Game manager.
 - Replace Placeholder assets with the unity store pre-made assets.
 - Get Door in the scene (Hopefully with animations)
 - Replace World lighting and make it more thematic.

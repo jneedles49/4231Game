@@ -109,9 +109,15 @@ public class Obj_Interaction : MonoBehaviour
                         //print("You clicked on the box");
                         //Get the game object from the RaycastHit and get the interactable object script component
                         obj = hit.transform.gameObject;
-                        obj.GetComponent<PickupBehavior>().pickup(this.gameObject);
-                        holdingObj = true;
-
+                        switch(obj.tag){
+                            case "Pickup":
+                                obj.GetComponent<PickupBehavior>().pickup(this.gameObject);
+                                holdingObj = true;
+                                break;
+                            case "Button":
+                                obj.GetComponent<Button>().activate();
+                            break;
+                        }
                         mouseClickCooldown_remaining = mouseClickCooldown;
                     }
                 }
