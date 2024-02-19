@@ -13,7 +13,7 @@
 - Replace World lighting and make it more thematic.
 - Add boxes to the scene.
 - ~~Create button and make it interact~~ with the boxes to open the door (Still need a door with animations). (Xander)
-- Add sounds to the door to the button and to the boxes.
+- Add sounds to the door to the button and to the ~~boxes.~~ (Boxes have audio scripting still need to do something for button)
 - Give player footstep sounds.
 
 ### Priority 2:
