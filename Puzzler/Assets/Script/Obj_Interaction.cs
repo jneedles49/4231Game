@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -14,12 +13,18 @@ public class Obj_Interaction : MonoBehaviour
     
     [SerializeField] private Camera mainCamera;
     private Vector3 pos;
-    public readonly float playerInteractionRadius = 2.0f;
     private int objectLayerMask = 1 << 6;
     public Ray interactRay;
     private RaycastHit hit;
-    private float mouseClickCooldown_remaining = 0f;
-    [SerializeField]private readonly float mouseClickCooldown = 1.0f;
+
+    [Header ("Interaction Paramaters")]
+    public float playerInteractionRadius;
+    private readonly float MinimumHoldDistance = .5f;
+    private readonly float MaximumHoldDistance = 2.00f;
+    private readonly float DefaultHoldDistance = 1.5f;
+    private readonly float ScrollObjHoldOffset = .1f;
+    private float mouseClickCooldownRemaining = 0f;
+    private readonly float mouseClickCooldown = 1.0f;
 
     #endregion
 
@@ -38,8 +43,8 @@ public class Obj_Interaction : MonoBehaviour
     private RectTransform reticleTransform;
     private RawImage reticleColor;
 
-    [SerializeField]private readonly Color HighlightColor = Color.white;
-    [SerializeField]private readonly Color normalColor = Color.grey;
+    [SerializeField]private Color HighlightColor = Color.white;
+    [SerializeField]private Color normalColor = Color.grey;
 
     private readonly Vector3 ReticleMaxSize = new Vector3(.3f,.3f,.3f);
     private readonly Vector3 ReticleMinSize = new Vector3(.15f,.15f,.15f);
@@ -63,6 +68,73 @@ public class Obj_Interaction : MonoBehaviour
 
         //is a ray that projects from the center of the screen, no matter the resolution
         interactRay = mainCamera.ScreenPointToRay(pos);
+
+
+        #region Object interaction
+
+        //If the player clicks the left mouse button and the physics raycast hits a collider on physics layer 6 then we enter into the if statement
+        if (Input.GetMouseButton(0) && mouseClickCooldownRemaining == 0.0f)
+        {
+
+            //if the player is not holding an object then we call a raycast and get the colliders
+            if (!holdingObj)
+            {
+
+                if (Physics.Raycast(interactRay, out hit, playerInteractionRadius, objectLayerMask))
+                {
+                    // If the cooldown of the players mouse click is zero, then we print a message, then restart the cooldown
+                    if (hit.collider)
+                    {
+                        //print("You clicked on the box");
+                        //Get the game object from the RaycastHit and get the interactable object script component
+                        obj = hit.transform.gameObject;
+                        switch(obj.tag){
+                            case "Pickup":
+                                obj.GetComponent<PickupBehavior>().pickup(this.gameObject);
+                                holdingObj = true;
+                                break;
+                            case "Button":
+                                obj.GetComponent<Button>().activate();
+                            break;
+                        }
+                        mouseClickCooldownRemaining = mouseClickCooldown;
+                    }
+                }
+            }
+            //if the player is holding an object then we just call the current objects pickup script, dropping the object, and resettinga cooldown
+            else
+            {
+
+                obj.GetComponent<PickupBehavior>().pickup(this.gameObject);
+                holdingObj = false;
+
+                mouseClickCooldownRemaining = mouseClickCooldown;
+            }
+        }
+
+        #endregion
+
+
+        #region Click Cooldown
+
+        //if the left mouse click cooldown is greater than zero than we dercement the cooldown 
+        if (mouseClickCooldownRemaining > 0.0f)
+        {
+            mouseClickCooldownRemaining -= .1f;
+            //print("Click Cooldown: " + mouseClickCooldownRemaining);
+        }
+        //if the cooldown somehow gets below 0 than we just est it to zero
+        else if (mouseClickCooldownRemaining < 0.0f) mouseClickCooldownRemaining = 0.0f;
+        
+        #endregion
+
+        Debug.DrawRay(interactRay.origin, interactRay.direction * playerInteractionRadius, Color.blue);
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
 
         #region Dynamic Reticle Changing
 
@@ -91,73 +163,20 @@ public class Obj_Interaction : MonoBehaviour
 
         #endregion
 
-        #region Object interaction
+        //Moving the hold position while the player is holding an object
+        #region Pushing and pulling object
+        if(holdingObj){
 
-        //If the player clicks the left mouse button and the physics raycast hits a collider on physics layer 6 then we enter into the if statement
-        if (Input.GetMouseButton(0) && mouseClickCooldown_remaining == 0.0f)
-        {
+            playerInteractionRadius += Input.mouseScrollDelta.y * ScrollObjHoldOffset;
+            playerInteractionRadius = Mathf.Clamp(playerInteractionRadius, MinimumHoldDistance, MaximumHoldDistance);
 
-            //if the player is not holding an object then we call a raycast and get the colliders
-            if (!holdingObj)
-            {
-
-                if (Physics.Raycast(interactRay, out hit, playerInteractionRadius, objectLayerMask))
-                {
-                    // If the cooldown of the players mouse click is zero, then we print a message, then restart the cooldown
-                    if (hit.collider)
-                    {
-                        //print("You clicked on the box");
-                        //Get the game object from the RaycastHit and get the interactable object script component
-                        obj = hit.transform.gameObject;
-                        switch(obj.tag){
-                            case "Pickup":
-                                obj.GetComponent<PickupBehavior>().pickup(this.gameObject);
-                                holdingObj = true;
-                                break;
-                            case "Button":
-                                obj.GetComponent<Button>().activate();
-                            break;
-                        }
-                        mouseClickCooldown_remaining = mouseClickCooldown;
-                    }
-                }
-            }
-            //if the player is holding an object then we just call the current objects pickup script, dropping the object, and resettinga cooldown
-            else
-            {
-
-                obj.GetComponent<PickupBehavior>().pickup(this.gameObject);
-                holdingObj = false;
-
-                mouseClickCooldown_remaining = mouseClickCooldown;
-            }
         }
+        else {
 
-        #endregion
+            playerInteractionRadius = DefaultHoldDistance;
 
-
-        #region Click Cooldown
-
-        //if the left mouse click cooldown is greater than zero than we dercement the cooldown 
-        if (mouseClickCooldown_remaining > 0.0f)
-        {
-            mouseClickCooldown_remaining -= .1f;
-            //print("Click Cooldown: " + mouseClickCooldown_remaining);
         }
-        //if the cooldown somehow gets below 0 than we just est it to zero
-        else if (mouseClickCooldown_remaining < 0.0f) mouseClickCooldown_remaining = 0.0f;
-        
         #endregion
-
-        Debug.DrawRay(interactRay.origin, interactRay.direction * playerInteractionRadius, Color.blue);
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-
     }
 
 

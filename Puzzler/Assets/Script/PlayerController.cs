@@ -50,10 +50,19 @@ public class PlayerController : MonoBehaviour
 
         playerController.Move(MoveDirection * Time.deltaTime);
 
-        rotation_x += -Input.GetAxis("Mouse Y") * lookSensitivity;
-        rotation_x = Mathf.Clamp(rotation_x, -lookXlimit, lookXlimit);
-        main_cam.transform.localRotation = Quaternion.Euler(rotation_x,0,0);
-        transform.rotation *= Quaternion.Euler(0,Input.GetAxis("Mouse X") * lookSensitivity, 0);
+        float rotation_y = Input.GetAxis("Mouse X") * lookSensitivity;
 
+        //Locks the camera if right mouse button is being held
+        //Note: Either this or Obj_interactions code may need to be migrated to just one Script to simplify a lot of things, will take a while but it will probably be worth it
+        //      As this script doesn't have the capability to just lock when an object's being held unless it connects to the obj_interaction script, which is bad in general
+        if(!Input.GetKey(KeyCode.Mouse1)){
+
+            rotation_x += -Input.GetAxis("Mouse Y") * lookSensitivity;
+            rotation_x = Mathf.Clamp(rotation_x, -lookXlimit, lookXlimit);
+
+            main_cam.transform.localRotation = Quaternion.Euler(rotation_x, 0, 0);
+            transform.rotation *= Quaternion.Euler(0, rotation_y, 0);
+
+        }
     }
 }

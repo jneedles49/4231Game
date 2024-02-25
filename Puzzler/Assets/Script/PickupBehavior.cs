@@ -4,13 +4,17 @@ using System.Linq.Expressions;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(Rigidbody))]
 public class PickupBehavior : MonoBehaviour
 {
     private bool pickedUp = false;
     private GameObject player;
+
+    //Physics
     private Vector3 holdPos;
     private float holdForceMult = 0.5f;
     private Rigidbody rg;
+    private Quaternion LockRotation = new Quaternion();
 
     [Header ("Audio")]
     private AudioSource audioController;
@@ -22,6 +26,7 @@ public class PickupBehavior : MonoBehaviour
 
         rg = GetComponent<Rigidbody>();
         audioController = GetComponent<AudioSource>();
+
         
     }
 
@@ -36,25 +41,59 @@ public class PickupBehavior : MonoBehaviour
             //if the object get's too far from the player then it just locked to the furthest postion away it can get
             //we do this by creating a new vector which is the objects postion clamped to within 2.1 units of the player
                 //The issue is that for some reason the transform get's clamped to the max value too much? that it inverts to the lowest value
+
+            //NOTE: We may not need this anymore if we continue to use the smooth Damp
             this.transform.position = new Vector3(
                 Mathf.Clamp(this.transform.position.x, player.transform.position.x - 2.5f, player.transform.position.x + 2.5f),
                 Mathf.Clamp(this.transform.position.y, player.transform.position.y - 2.5f, player.transform.position.y + 2.5f),
                 Mathf.Clamp(this.transform.position.z, player.transform.position.z - 2.5f, player.transform.position.z + 2.5f)
             );
 
+            //Clamping the affect of gravity and maximum and minimum force applied to the object
             rg.velocity = new Vector3(
                 Mathf.Clamp(rg.velocity.x, -5.0f, 5.0f),
                 Mathf.Clamp(rg.velocity.y, -5.0f, 5.0f),
                 Mathf.Clamp(rg.velocity.z, -5.0f, 5.0f)
             );
+            
 
-            this.transform.rotation = new Quaternion(0,0,0,0);
 
-            //Debug.Log("Velocity: " + rg.velocity);
+            #region Player Rotating Object
+            //TODO Need to finish
+            if(Input.GetKey(KeyCode.Mouse1)){
+
+                //Getting player input
+                float yawMouse = Input.GetAxis("Mouse X");
+                float pitchMouse = Input.GetAxis("Mouse Y");
+
+                if(Mathf.Abs(yawMouse) > .2f || Mathf.Abs(pitchMouse) > .2f){
+
+                    //Locking down rotation to just the object because the rigid body somehow starts applying angular velocity onto itself
+                    rg.freezeRotation = true;
+
+                    transform.Rotate(Vector3.up, -yawMouse * 5.0f, Space.World);
+                    transform.Rotate(Vector3.right, pitchMouse * 5.0f, Space.World);
+                }
+
+                LockRotation = transform.rotation;
+
+            }
+            else {
+
+                transform.rotation = LockRotation;
+
+            }
+            
+
+            #endregion
+
 
         }
 
         #endregion
+
+            //Resetting Rotation for when object is not being held
+            LockRotation = transform.rotation;
     }
 
     void FixedUpdate(){
@@ -69,12 +108,10 @@ public class PickupBehavior : MonoBehaviour
             Obj_Interaction playerInteract = player.GetComponent<Obj_Interaction>();
             float rayEndpoint = playerInteract.playerInteractionRadius;
 
-            //Debug.Log("Endpoint: " + rayEndpoint);
 
             Ray interactRay = playerInteract.interactRay; 
             Vector3 holdPos = interactRay.GetPoint(rayEndpoint);
 
-            //Debug.Log("Object is gravitating to: " + holdPos.ToString());
             
             //Getting the vectory from the objects current position to the player's hold position.
             Vector3 directionToHoldPos = (holdPos - this.transform.position).normalized;
@@ -89,17 +126,19 @@ public class PickupBehavior : MonoBehaviour
             //Clamping the value, so we adjust objects' translation speed based on the distance 
             float clampedDistance = Mathf.Clamp(distanceToHoldPos, 0.0f, 1.0f);
 
-            //Debug.Log("Interactable Object, Distance to Hold Postion: " + distanceToHoldPos);
-
 
             //We influence the hold force by both the actual distance and the clamped distance to achieve a slighty better feel
             holdForce *= (distanceToHoldPos * .5f) + (clampedDistance * .5f);
 
-            //Debug.Log("Hold Force: " + holdForce);
 
+            //NOTE We will not need this if we use Smooth dampened for obj manipulation
             //If object is close enough to the hold position we just translate right to it. Not Perfect but good enough
-            if(clampedDistance > .45)rg.AddForce(holdForce,ForceMode.VelocityChange);
-            else rg.MovePosition(holdPos);
+            //if(clampedDistance > .45) rg.velocity = Vector3.SmoothDamp(this.transform.position, holdPos, ref hold .02f);
+            //else this.transform.position = Vector3.SmoothDamp(this.transform.position, holdPos,ref holdForce, .02f);
+
+            //IDK This kind of works better than the Rigid body add force method I was trying before
+            rg.transform.position = Vector3.SmoothDamp(this.transform.position, holdPos,ref holdForce, .02f);
+
 
         }
 
@@ -115,9 +154,13 @@ public class PickupBehavior : MonoBehaviour
     public void pickup(GameObject player)
     {
         pickedUp = !pickedUp;
+        //Renabling rigidbody rotations when the object is either picked up or dropped for safety's sake
+        rg.freezeRotation = false;
         //rg.useGravity = !rg.useGravity;
         this.player = player;
-        //Debug.Log("You picked up the object!");
+        if (!pickedUp){
+           rg.AddForce(Vector3.up * 2.5f, ForceMode.VelocityChange); 
+         } 
     }
 
     private void OnTriggerEnter(Collider other) {
