@@ -6,7 +6,7 @@
 ## Priority 1:
 
 > Need to finish tutorial level
-- Put Player character in as prefab to use in scene.
+- ~~Put Player character in as prefab to use in scene.~~
 - Refactor Scripts to operate under the Game manager.
 - Replace Placeholder assets with the unity store pre-made assets.
 - Get Door in the scene (Hopefully with animations)
@@ -25,7 +25,7 @@
 - ... TBD
 
 #### Priority 3:
-- Object manipulation needs tweaking (Still needs tweaking but works for the most part:)
+- ~~Object manipulation needs tweaking (Still needs tweaking but works for the most part:)~~ (Note Xander: Reworked Manipulation, I don't want to touch it again unless I absolutely have to)
 
 
 ## Gifs of Progress
@@ -39,5 +39,7 @@ Feb 15th, 2024 "Refined Object Manipulation"
 ![Unity_jQYIP71lDg](https://github.com/jneedles49/4231Game/assets/150978475/c1d09944-b530-4743-a616-edb7169b7aab)
 
 
+Feb 25th, 2024 "MORE MANIPULATION"
 
+![MOEMANIP](https://github.com/jneedles49/4231Game/assets/150978475/54d63109-b35b-48f1-81b2-81006065a8dc)
 
