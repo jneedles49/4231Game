@@ -6,9 +6,9 @@
 ## Priority 1:
 
 > Need to finish tutorial level
-> create template room that can be copied (Josh)
 - ~~Put Player character in as prefab to use in scene.~~
 - Refactor Scripts to operate under the Game manager.
+- create template room that can be copied (Josh)
 - Replace Placeholder assets with the unity store pre-made assets.
 - Get Door in the scene (Hopefully with animations)
 - Replace World lighting and make it more thematic.
