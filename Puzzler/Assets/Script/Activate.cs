@@ -1,28 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class Activate : MonoBehaviour
 {
 
     //Everything except the activate function in this script is placeholder, can and should be deleted in the near future
     private string SelfTag;
-    private Rigidbody rg; 
+    [SerializeField] private AudioClip soundEffect;
+    private AudioSource SoundPlayer;
     // Start is called before the first frame update
     void Start()
     {
         SelfTag = this.tag;
-        //DELETE THIS
-        rg = this.GetComponent<Rigidbody>();
-        rg.useGravity = false; 
+        SoundPlayer = GetComponent<AudioSource>();
+        SoundPlayer.clip = soundEffect;
     }
     public void activate(){
         //This switch case should be changed and added on to
         switch(SelfTag){
 
-               case "Pickup":
-                    rg.useGravity = true;
-               break;
+                //Opening Door by Playing open animation
+                case "Door":
+
+                    this.GetComponent<Animator>().SetTrigger("OpenDoor");
+                    if (!SoundPlayer.isPlaying) SoundPlayer.Play();
+
+                break;
 
         }
     }
