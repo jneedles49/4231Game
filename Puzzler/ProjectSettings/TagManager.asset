@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pickup
   - Button
+  - Door
   layers:
   - Default
   - TransparentFX
