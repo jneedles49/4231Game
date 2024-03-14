@@ -20,6 +20,7 @@ public class PickupBehavior : MonoBehaviour
     private AudioSource audioController;
     [SerializeField] private AudioClip CollisionSound;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,16 +39,6 @@ public class PickupBehavior : MonoBehaviour
         //This isn't a perfect way to clamp the objects postition but it's getting there
         if (pickedUp)
         {
-            //if the object get's too far from the player then it just locked to the furthest postion away it can get
-            //we do this by creating a new vector which is the objects postion clamped to within 2.1 units of the player
-                //The issue is that for some reason the transform get's clamped to the max value too much? that it inverts to the lowest value
-
-            //NOTE: We may not need this anymore if we continue to use the smooth Damp
-            this.transform.position = new Vector3(
-                Mathf.Clamp(this.transform.position.x, player.transform.position.x - 2.5f, player.transform.position.x + 2.5f),
-                Mathf.Clamp(this.transform.position.y, player.transform.position.y - 2.5f, player.transform.position.y + 2.5f),
-                Mathf.Clamp(this.transform.position.z, player.transform.position.z - 2.5f, player.transform.position.z + 2.5f)
-            );
 
             //Clamping the affect of gravity and maximum and minimum force applied to the object
             rg.velocity = new Vector3(
@@ -59,7 +50,7 @@ public class PickupBehavior : MonoBehaviour
 
 
             #region Player Rotating Object
-            //TODO Need to finish
+            //NOTE: Object still seems to spin when the right mouse button is just held down sometimes, need to do more testing
             if(Input.GetKey(KeyCode.Mouse1)){
 
                 //Getting player input
@@ -164,6 +155,8 @@ public class PickupBehavior : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
+
+        //We want to implement a switch statement here so that we can change sound based on the surface it is hitting
 
         audioController.clip = CollisionSound;
         playCollisionSound();

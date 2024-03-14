@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
         //Transforming object along the x and z axis
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
-        
+
         //Obtaining current speed values
         float spd_x = speed * Input.GetAxis("Vertical");
         float spd_y = speed * Input.GetAxis("Horizontal");
@@ -42,9 +42,10 @@ public class PlayerController : MonoBehaviour
         //Resetting y value
         MoveDirection.y = movementDirectionY;
 
-        if(!playerController.isGrounded){
+        if (!playerController.isGrounded)
+        {
 
-            MoveDirection.y -=gravity * Time.deltaTime;
+            MoveDirection.y -= gravity * Time.deltaTime;
 
         }
 
@@ -55,7 +56,8 @@ public class PlayerController : MonoBehaviour
         //Locks the camera if right mouse button is being held
         //Note: Either this or Obj_interactions code may need to be migrated to just one Script to simplify a lot of things, will take a while but it will probably be worth it
         //      As this script doesn't have the capability to just lock when an object's being held unless it connects to the obj_interaction script, which is bad in general
-        if(!Input.GetKey(KeyCode.Mouse1)){
+        if (!Input.GetKey(KeyCode.Mouse1))
+        {
 
             rotation_x += -Input.GetAxis("Mouse Y") * lookSensitivity;
             rotation_x = Mathf.Clamp(rotation_x, -lookXlimit, lookXlimit);

@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class Obj_Interaction : MonoBehaviour
 {
@@ -49,6 +47,9 @@ public class Obj_Interaction : MonoBehaviour
     private readonly Vector3 ReticleMaxSize = new Vector3(.3f,.3f,.3f);
     private readonly Vector3 ReticleMinSize = new Vector3(.15f,.15f,.15f);
 
+    [SerializeField] private GameObject FadeObj;
+    private Image image;
+
     #endregion
 
     // Start is called before the first frame update
@@ -56,11 +57,14 @@ public class Obj_Interaction : MonoBehaviour
     {
 
         //gets the screen width and height
-       pos = new Vector3(Screen.width/2, Screen.height/2, 7);
-       reticleTransform = reticle.GetComponent<RectTransform>();
-       reticleColor = reticle.GetComponent<RawImage>();
+        pos = new Vector3(Screen.width / 2, Screen.height / 2, 7);
+        reticleTransform = reticle.GetComponent<RectTransform>();
+        reticleColor = reticle.GetComponent<RawImage>();
 
-        
+        //Fading In
+        image = FadeObj.GetComponent<Image>();
+        Fade(true);
+
     }
 
     //Called once every froma as dictated by the project
@@ -85,7 +89,6 @@ public class Obj_Interaction : MonoBehaviour
                     // If the cooldown of the players mouse click is zero, then we print a message, then restart the cooldown
                     if (hit.collider)
                     {
-                        //print("You clicked on the box");
                         //Get the game object from the RaycastHit and get the interactable object script component
                         obj = hit.transform.gameObject;
                         switch(obj.tag){
@@ -179,5 +182,37 @@ public class Obj_Interaction : MonoBehaviour
         #endregion
     }
 
+    public void Fade(bool fadein){
+
+        StartCoroutine(FadeScreen(fadein));
+
+    }
+
+
+    IEnumerator FadeScreen(bool fadeIn){
+
+        if(fadeIn){
+
+            for(float i = 1; i >= 0; i -= Time.deltaTime){
+
+                image.color = new Color(0,0,0,i);
+                yield return null;   
+
+            }
+
+
+        }
+        else{
+
+            for(float i = 0; i <= 1; i += Time.deltaTime){
+
+                image.color = new Color(0,0,0,i);
+                yield return null;   
+
+            }
+
+        }
+
+    }
 
 }
