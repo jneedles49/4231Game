@@ -478,14 +478,6 @@ PrefabInstance:
       value: FloorTile
       objectReference: {fileID: 0}
     - target: {fileID: 6672888918955914591, guid: 34bd3bd594616834d941b634c8347a17, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 9.360652
-      objectReference: {fileID: 0}
-    - target: {fileID: 6672888918955914591, guid: 34bd3bd594616834d941b634c8347a17, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 9.685802
-      objectReference: {fileID: 0}
-    - target: {fileID: 6672888918955914591, guid: 34bd3bd594616834d941b634c8347a17, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.7414
       objectReference: {fileID: 0}
