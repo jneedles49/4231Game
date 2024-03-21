@@ -15,11 +15,17 @@ public class PickupBehavior : MonoBehaviour
     private float holdForceMult = 0.5f;
     private Rigidbody rg;
     private Quaternion LockRotation = new Quaternion();
+    private float ThrowForce = 15.0f;
 
     [Header ("Audio")]
     private AudioSource audioController;
     [SerializeField] private AudioClip CollisionSound;
 
+    //Connected SHADOW OBJECT
+    public bool shadowInterrupt = false; 
+    public bool greaterOrSmaller = false;
+    public Vector3 ShadowOverride;
+    public Vector3 ShadowNormal;
 
     // Start is called before the first frame update
     void Start()
@@ -101,7 +107,7 @@ public class PickupBehavior : MonoBehaviour
 
 
             Ray interactRay = playerInteract.interactRay; 
-            Vector3 holdPos = interactRay.GetPoint(rayEndpoint);
+            holdPos = interactRay.GetPoint(rayEndpoint);
 
             
             //Getting the vectory from the objects current position to the player's hold position.
@@ -121,15 +127,52 @@ public class PickupBehavior : MonoBehaviour
             //We influence the hold force by both the actual distance and the clamped distance to achieve a slighty better feel
             holdForce *= (distanceToHoldPos * .5f) + (clampedDistance * .5f);
 
-
-            //NOTE We will not need this if we use Smooth dampened for obj manipulation
-            //If object is close enough to the hold position we just translate right to it. Not Perfect but good enough
-            //if(clampedDistance > .45) rg.velocity = Vector3.SmoothDamp(this.transform.position, holdPos, ref hold .02f);
-            //else this.transform.position = Vector3.SmoothDamp(this.transform.position, holdPos,ref holdForce, .02f);
+            //You can't move past the shadow box when it notifies that there has been collision 
 
             //IDK This kind of works better than the Rigid body add force method I was trying before
-            rg.transform.position = Vector3.SmoothDamp(this.transform.position, holdPos,ref holdForce, .02f);
+            
+            //NOTE: THIS WORKS SOMEWHAT AS INTENDED, THERE IS STUTTERING I would assume because of the number of calculations. Being Done and the amount of resources it uses.
+            //We could work to solve this by instead doing this computation elsewhere, and implementing essentially a cooldown on the collision enter as it can register a collision enter multiple times in a short span 
+            //Needs Testing and work done to ensure more stability
+            if(!shadowInterrupt) rg.transform.position = Vector3.SmoothDamp(this.transform.position, holdPos, ref holdForce, .02f);
+            else{
+                Vector3 position = this.transform.position;
 
+                //Determining how to clamp
+                if(ShadowOverride.x == 0) ShadowOverride.x = holdPos.x;
+                else{
+
+                    if(ShadowNormal.x > 0 && holdPos.x > ShadowOverride.x) ShadowOverride.x = holdPos.x;
+                    if(ShadowNormal.x < 0  && holdPos.x < ShadowOverride.x) ShadowOverride.x = holdPos.x;
+
+
+                }
+
+                if(ShadowOverride.y == 0) ShadowOverride.y = holdPos.y;
+                else{
+
+                    if(ShadowNormal.y > 0 && holdPos.y > ShadowOverride.y) ShadowOverride.y = holdPos.y;
+                    if(ShadowNormal.y < 0  && holdPos.y < ShadowOverride.y) ShadowOverride.y = holdPos.y;
+
+
+                }
+
+                if(ShadowOverride.z == 0) ShadowOverride.z = holdPos.z;
+                else{
+
+                    if(ShadowNormal.z > 0 && holdPos.z > ShadowOverride.z) ShadowOverride.z = holdPos.z;
+                    if(ShadowNormal.z < 0  && holdPos.z < ShadowOverride.z) ShadowOverride.z = holdPos.z;
+
+                }
+
+                
+                rg.transform.position = Vector3.SmoothDamp(this.transform.position, ShadowOverride, ref holdForce, .02f);
+
+
+            } 
+ 
+            
+            //rg.transform.position = Vector3.SmoothDamp(this.transform.position, holdPos, ref holdForce, .02f);
 
         }
 
@@ -147,7 +190,6 @@ public class PickupBehavior : MonoBehaviour
         pickedUp = !pickedUp;
         //Renabling rigidbody rotations when the object is either picked up or dropped for safety's sake
         rg.freezeRotation = false;
-        //rg.useGravity = !rg.useGravity;
         this.player = player;
         if (!pickedUp){
            rg.AddForce(Vector3.up * 2.5f, ForceMode.VelocityChange); 
@@ -168,5 +210,18 @@ public class PickupBehavior : MonoBehaviour
         if(!audioController.isPlaying) audioController.Play();
 
     }
+
+    public void ThrowInDirection(Vector3 Direction){
+
+
+        pickedUp = false;
+        //Renabling rigidbody rotations when the object is either picked up or dropped for safety's sake
+        rg.freezeRotation = false;
+        if (!pickedUp){
+           rg.AddForce(Direction * ThrowForce, ForceMode.Impulse); 
+         } 
+
+    }
+
 
 }

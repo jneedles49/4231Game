@@ -77,7 +77,7 @@ public class Obj_Interaction : MonoBehaviour
         #region Object interaction
 
         //If the player clicks the left mouse button and the physics raycast hits a collider on physics layer 6 then we enter into the if statement
-        if (Input.GetMouseButton(0) && mouseClickCooldownRemaining == 0.0f)
+        if (Input.GetMouseButton(0) && mouseClickCooldownRemaining == 0.0f) // Left Mouse
         {
 
             //if the player is not holding an object then we call a raycast and get the colliders
@@ -96,9 +96,6 @@ public class Obj_Interaction : MonoBehaviour
                                 obj.GetComponent<PickupBehavior>().pickup(this.gameObject);
                                 holdingObj = true;
                                 break;
-                            case "Button":
-                                obj.GetComponent<Button>().activate();
-                            break;
                         }
                         mouseClickCooldownRemaining = mouseClickCooldown;
                     }
@@ -113,6 +110,13 @@ public class Obj_Interaction : MonoBehaviour
 
                 mouseClickCooldownRemaining = mouseClickCooldown;
             }
+        }
+        else if(Input.GetMouseButton(2) && holdingObj){ // Middle Mouse
+
+            //Throw Object 
+            obj.GetComponent<PickupBehavior>().ThrowInDirection(interactRay.direction);
+            holdingObj = false;
+
         }
 
         #endregion
