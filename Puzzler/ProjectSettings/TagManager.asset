@@ -9,6 +9,9 @@ TagManager:
   - Door
   - User
   - Shadow
+  - Red
+  - Blue
+  - Chest
   layers:
   - Default
   - TransparentFX
