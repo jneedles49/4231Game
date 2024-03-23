@@ -19,17 +19,18 @@
 ### Priority 2:
 
 > ~~Start creating second level Shadow boxes.~~ (Basic design done now need to work on the interactions with different kinds of shadow objects)
-- Build scene much like the last one. (This should be eaiser since we know how to set everything up).
 - ~~Start designing and making shadow mechanic~~ and shadow boxes.
-- Add harsh lighting to the scne to create the shadow effect
+- Add harsh lighting to the scene to create the shadow effect
 - Create Symbols that glow and are linked to solving the puzzles.
 - Main Menu
+- New Box/create model to replace the current box model
 
 #### Priority 3:
 - ~~Object manipulation needs tweaking (Still needs tweaking but works for the most part:)~~ (Note Xander: Reworked Manipulation, I don't want to touch it again unless I absolutely have to)
 - ~~Add a throw mechanic, because why not?~~
-- Fix shadow collisions/optimize it. 
+- Fix shadow collisions/optimize it. (Fix how exactly it moves, by making it move either on the XY or YZ axes)
 - In-Game menu
+- Chest opening sound effects
 
 
 ## Gifs of Progress
