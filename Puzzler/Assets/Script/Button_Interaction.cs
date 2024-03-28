@@ -15,12 +15,15 @@ public class Button : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Vector3 CurrentPosition = this.transform.position;
+        //Offsetting on Y because Unity Doesn't register collision if object is a little bit below the ray
+        Vector3 RayStartPoint = new Vector3(CurrentPosition.x,CurrentPosition.y - .5f, CurrentPosition.z);
         //Creating a new ray that just points up 1 unit
-        ObjectDetection = new Ray(transform.position, Vector3.up);
+        ObjectDetection = new Ray(RayStartPoint, Vector3.up);
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         #region Physics intraction with button
         if (!activated)

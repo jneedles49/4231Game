@@ -1563,10 +1563,10 @@ PrefabInstance:
       addedObject: {fileID: 1516589912}
     - targetCorrespondingSourceObject: {fileID: 6821887585681450876, guid: 989252949211ee443b12d8c8c0fc081f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1516589911}
+      addedObject: {fileID: 1516589910}
     - targetCorrespondingSourceObject: {fileID: 6821887585681450876, guid: 989252949211ee443b12d8c8c0fc081f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1516589910}
+      addedObject: {fileID: 1516589918}
   m_SourcePrefab: {fileID: 100100000, guid: 989252949211ee443b12d8c8c0fc081f, type: 3}
 --- !u!1 &1516589908 stripped
 GameObject:
@@ -1599,27 +1599,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &1516589911
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1516589908}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.011865105, y: 0.011865103, z: 0.0030381563}
-  m_Center: {x: 0, y: -1.0793701e-17, z: -0.0015190782}
 --- !u!82 &1516589912
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1742,6 +1721,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedObject: {fileID: 2100466930}
+--- !u!65 &1516589918
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516589908}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.011865105, y: 0.011865103, z: 0.0030381563}
+  m_Center: {x: 0, y: -1.0793701e-17, z: -0.0015190782}
 --- !u!1 &1521622772
 GameObject:
   m_ObjectHideFlags: 0
