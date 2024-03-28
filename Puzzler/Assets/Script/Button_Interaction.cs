@@ -11,6 +11,7 @@ public class Button : MonoBehaviour
     private RaycastHit ObjDetails;
     private bool activated = false;
     #endregion
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +47,8 @@ public class Button : MonoBehaviour
 
         Debug.Log("Activated");
         connectedObject.GetComponent<Activate>().activate();
+        if(this.GetComponent<Animator>()) this.GetComponent<Activate>().activate();
+
 
     }
 }

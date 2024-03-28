@@ -35,6 +35,12 @@ public class Activate : MonoBehaviour
                     Destroy(this.GetComponent<BoxCollider>());
                 break;
 
+                case "Button":
+
+                    this.GetComponent<Animator>().SetTrigger("Button_Activate");
+
+                break;
+
         }
     }
 }
