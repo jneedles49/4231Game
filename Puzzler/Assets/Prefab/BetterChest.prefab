@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 38ef0f8326b0ef94e8c26635b86ddd30, type: 3}
       propertyPath: m_Name
-      value: Chest Variant
+      value: BetterChest
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 38ef0f8326b0ef94e8c26635b86ddd30, type: 3}
       propertyPath: m_Layer
@@ -187,7 +187,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -239,7 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36fd7ec163f0b7747a5c4669a9264c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundEffect: {fileID: 8300000, guid: 856a63470c9c8ce4e9253e09705aa2a9, type: 3}
+  soundEffect: {fileID: 8300000, guid: c2b57bf431e814f47919e32a277f4a31, type: 3}
 --- !u!65 &1677370824490429437
 BoxCollider:
   m_ObjectHideFlags: 0

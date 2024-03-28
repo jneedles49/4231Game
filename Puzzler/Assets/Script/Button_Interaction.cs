@@ -3,6 +3,7 @@ using UnityEngine;
 public class Button : MonoBehaviour
 {
     [SerializeField] private GameObject connectedObject;
+    [SerializeField] private GameObject ParentObject;
     //Change this so it just looks at some other script to get layer information
     private int InteractObjectLayer = 1 << 6;
 
@@ -10,11 +11,15 @@ public class Button : MonoBehaviour
     private Ray ObjectDetection; 
     private RaycastHit ObjDetails;
     private bool activated = false;
+    private Animator ParentAnimator;
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
+        //Getting Parent's Animator
+        if(ParentObject) ParentAnimator = ParentObject.GetComponent<Animator>();
+
         Vector3 CurrentPosition = this.transform.position;
         //Offsetting on Y because Unity Doesn't register collision if object is a little bit below the ray
         Vector3 RayStartPoint = new Vector3(CurrentPosition.x,CurrentPosition.y - .5f, CurrentPosition.z);
@@ -50,7 +55,8 @@ public class Button : MonoBehaviour
 
         Debug.Log("Activated");
         connectedObject.GetComponent<Activate>().activate();
-        if(this.GetComponent<Animator>()) this.GetComponent<Activate>().activate();
+        //TODO Xander: We need to use the animation on the parent not the button
+        if(ParentObject) ParentAnimator.SetTrigger("Button_Activate");
 
 
     }
