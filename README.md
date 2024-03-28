@@ -30,8 +30,8 @@
 - ~~Add a throw mechanic, because why not?~~
 - Fix shadow collisions/optimize it. (Fix how exactly it moves, by making it move either on the XY or YZ axes) (Xander)
 - In-Game menu
-- Chest opening sound effects
-- Button Animations not working, need to fix (Xander)
+- ~~Chest opening sound effects~~
+- ~~Button Animations not working, need to fix (Xander)~~
 
 
 ## Gifs of Progress
