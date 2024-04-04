@@ -6,26 +6,27 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject player;
-    private int maxSceneNumber = 3;
+    private int maxSceneNumber = 4;
 
     //NOTE: The game manager should be controlling all of the saving/loading user progress, loading levels, and all other constant things.
     //very little should actually interact with game manager only to ask it to load the next level and to complete all of the other assoctiated processes.
 
     public void LoadNextLevel(){
 
-        //Fadeout for the player
-        player.GetComponent<Obj_Interaction>().Fade(false);
+        if(player){
+            //Fadeout for the player
+            player.GetComponent<Obj_Interaction>().Fade(false);
 
-        //If the SceneNumber value doesn't exist then we create it.
-        if(!PlayerPrefs.HasKey("SceneNumber")) PlayerPrefs.SetInt("SceneNumber", 0);
+            //If the SceneNumber value doesn't exist then we create it.
+            if (!PlayerPrefs.HasKey("SceneNumber")) PlayerPrefs.SetInt("SceneNumber", 0);
+        }
 
         //Getting SceneNumber
-
-        int SceneNumber = PlayerPrefs.GetInt("SceneNumber");
-        Debug.Log("Loading Scene Number: " + SceneNumber);
+        int NextSceneNumber = PlayerPrefs.GetInt("SceneNumber") + 1;
+        Debug.Log("Loading Scene Number: " + NextSceneNumber);
 
         //Incrementing SceneNumber on disk
-        if(SceneNumber < maxSceneNumber - 1) PlayerPrefs.SetInt("SceneNumber", SceneNumber+1);
+        if(NextSceneNumber < maxSceneNumber - 1) PlayerPrefs.SetInt("SceneNumber", NextSceneNumber);
         else PlayerPrefs.SetInt("SceneNumber", maxSceneNumber - 1);
 
 
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour
 
 
         //We at last load the next scene
-        SceneManager.LoadScene(SceneNumber);
+        SceneManager.LoadScene(NextSceneNumber);
 
     }
 }

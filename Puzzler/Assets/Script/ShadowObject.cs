@@ -20,6 +20,7 @@ public class ShadowObject : MonoBehaviour
 
     private Rigidbody rg;
     private Vector3 velocity = Vector3.zero;
+    private Transform trans;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,8 @@ public class ShadowObject : MonoBehaviour
         Y_Constant = this.transform.position.y;
         Z_Constant = this.transform.position.z;
         rg = this.GetComponent<Rigidbody>();
+
+	trans = this.transform;
 
         //Connecting shadow objcet to pickup object
         ConnectedObj_PickupBehavior = ConnectedObject.GetComponent<PickupBehavior>();
@@ -64,6 +67,11 @@ public class ShadowObject : MonoBehaviour
 
         //This is our new position we will be moving to
         Vector3 new_pos = new Vector3(new_X, new_Y, new_Z); 
+
+	Ray Direction = new Ray(trans.position, new_pos);
+
+
+	Debug.DrawRay(Direction.origin, Direction.direction, Color.blue);
 
         //This is the actual movement from where we are now to where we need to go
         this.transform.position = Vector3.SmoothDamp(this.transform.position, new_pos, ref velocity, .1f);
