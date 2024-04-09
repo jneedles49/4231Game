@@ -15,7 +15,6 @@ public class Activate : MonoBehaviour
         SoundPlayer = GetComponent<AudioSource>();
         SoundPlayer.clip = soundEffect;
     }
-
     public void activate(){
         //This switch case should be changed and added on to
         switch(SelfTag){
@@ -28,18 +27,6 @@ public class Activate : MonoBehaviour
 
                 break;
 
-                case "Chest": 
-
-                    this.GetComponent<Animator>().SetTrigger("Open_Chest");
-                    if (!SoundPlayer.isPlaying) SoundPlayer.Play();
-                    Destroy(this.GetComponent<BoxCollider>());
-                break;
-
-                case "Button":
-
-                    this.GetComponent<Animator>().SetTrigger("Button_Activate");
-
-                break;
 
         }
     }

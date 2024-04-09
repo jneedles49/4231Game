@@ -2,14 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject player;
     private int maxSceneNumber = 4;
+    public AudioMixer mixer;
 
     //NOTE: The game manager should be controlling all of the saving/loading user progress, loading levels, and all other constant things.
     //very little should actually interact with game manager only to ask it to load the next level and to complete all of the other assoctiated processes.
+
+    public void Start(){
+
+
+
+    }
 
     public void LoadNextLevel(){
 
@@ -37,4 +45,21 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(NextSceneNumber);
 
     }
+
+    public void AdjustAudioMixer(string MixerName, float value){
+
+	if(!mixer) Debug.LogError("NO MIXER DUMMY");
+	else{
+		float SetValue = 0f;
+		if(value == 0) SetValue = -80f;
+		else SetValue = value * 30 -20;
+
+		if(mixer.SetFloat(MixerName,SetValue)) Debug.Log("Set New Audio Successfully");
+		else Debug.Log("Why....? You have betrayed me, betrayed your own blood, for that you.. will... Suffer!");
+
+	}
+
+
+    }
+
 }

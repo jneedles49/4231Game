@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class Main_Menu : MonoBehaviour
@@ -6,6 +7,7 @@ public class Main_Menu : MonoBehaviour
     [SerializeField] private GameObject Home_Menu;
     [SerializeField] private GameObject Options_Menu;
     [SerializeField] private BetterButton ContinueButton;
+    public AudioMixer mixer;
 
 
     public void Start(){
@@ -52,6 +54,22 @@ public class Main_Menu : MonoBehaviour
     public void LoadSelectedLevel(int levelID){
 
         SceneManager.LoadScene(levelID);
+
+    }
+
+    public void AdjustAudioMixer(string MixerName, float value){
+
+	if(!mixer) Debug.LogError("NO MIXER DUMMY");
+	else{
+		float SetValue = 0f;
+		if(value == 0) SetValue = -80f;
+		else SetValue = value * 30 -20;
+
+		if(mixer.SetFloat(MixerName,SetValue)) Debug.Log("Set New Audio Successfully");
+		else Debug.Log("WHY GOD WHY, PLEASE NO, WHY DID YOU GIVE ME BAD INFORMATION?!?!? What am I gonna tell my wife.......");
+
+	}
+
 
     }
 

@@ -96,11 +96,6 @@ public class Obj_Interaction : MonoBehaviour
                                 obj.GetComponent<PickupBehavior>().pickup(this.gameObject);
                                 holdingObj = true;
                                 break;
-                            case "Chest":
-
-                                obj.GetComponent<Activate>().activate();
-
-                            break;
                         }
                         mouseClickCooldownRemaining = mouseClickCooldown;
                     }

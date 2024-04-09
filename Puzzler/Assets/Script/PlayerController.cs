@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     float rotation_x = 0;
     float gravity = 20.0f;
     Vector3 MoveDirection = Vector3.zero;
+    public static bool Paused = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,28 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+	if(Input.GetKeyUp(KeyCode.Escape)){
+		if(!Paused){
+
+			Cursor.lockState = CursorLockMode.Confined;
+			Cursor.visible = true;
+			Time.timeScale = 0;
+			Paused = true;
+
+		}
+		else{
+			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.visible = false;  
+			Time.timeScale = 1;
+			Paused = false;
+		}
+	}
+
+	//Need to return here so we don't keep handling input and turning while paused
+	if(Paused){ 
+		return;
+	}
+	
         //Transforming object along the x and z axis
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
@@ -66,5 +89,6 @@ public class PlayerController : MonoBehaviour
             transform.rotation *= Quaternion.Euler(0, rotation_y, 0);
 
         }
+
     }
 }
