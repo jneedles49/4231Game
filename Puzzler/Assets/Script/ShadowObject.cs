@@ -33,12 +33,13 @@ public class ShadowObject : MonoBehaviour
 	trans = this.transform;
 
         //Connecting shadow objcet to pickup object
-        ConnectedObj_PickupBehavior = ConnectedObject.GetComponent<PickupBehavior>();
+	if(ConnectedObject) ConnectedObj_PickupBehavior = ConnectedObject.GetComponent<PickupBehavior>();
 
     }
 
     void FixedUpdate()
     {
+	if(!ConnectedObject) return;
 
         //These will become our paramaters when we create our new Vector3 position
         float new_X;
@@ -82,7 +83,11 @@ public class ShadowObject : MonoBehaviour
     
     private void OnCollisionEnter(Collision other) {
 
+
         Debug.Log("Collided");
+
+
+	if(!ConnectedObject) return;
 
         ConnectedObj_PickupBehavior.shadowInterrupt = true;
 
@@ -112,7 +117,7 @@ public class ShadowObject : MonoBehaviour
 
     private void OnCollisionExit(Collision other) {
 
-        ConnectedObj_PickupBehavior.shadowInterrupt = false;
+        if(ConnectedObject)ConnectedObj_PickupBehavior.shadowInterrupt = false;
 
         Debug.Log("Left Collision");
 
