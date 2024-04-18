@@ -18,29 +18,10 @@ public class Button : MonoBehaviour
         ObjectDetection = new Ray(transform.position, Vector3.up);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        #region Physics intraction with button
-        if (!activated)
-        {
-            if (Physics.Raycast(ObjectDetection, out ObjDetails, 1.0f, InteractObjectLayer))
-            {
-                GameObject obj = ObjDetails.collider.gameObject;
-                if(obj.GetComponent<Rigidbody>().velocity == Vector3.zero){
-
-                    activated = true;
-                    activate();
-                }
-
-
-            }
-            //Debug ray should disappear when after you place an object and it comes to a complete stop 
-            Debug.DrawRay(ObjectDetection.origin, ObjectDetection.direction, Color.green);
-        }
-
+    private void OnCollisionEnter(Collision other) {
+        Debug.Log("Collided");
+        activate();
     }
-    #endregion
 
     public void activate(){
 
