@@ -10,17 +10,10 @@ public class Obj_Interaction : MonoBehaviour
     [Header ("Character Attributes")]
     
     [SerializeField] private Camera mainCamera;
+
     private Vector3 pos;
     private int objectLayerMask = 1 << 6;
-    public Ray interactRay;
-    private RaycastHit hit;
 
-    [Header ("Interaction Paramaters")]
-    public float playerInteractionRadius;
-    private readonly float MinimumHoldDistance = .5f;
-    private readonly float MaximumHoldDistance = 2.00f;
-    private readonly float DefaultHoldDistance = 1.5f;
-    private readonly float ScrollObjHoldOffset = .1f;
     private float mouseClickCooldownRemaining = 0f;
     private readonly float mouseClickCooldown = 1.0f;
 
@@ -28,8 +21,25 @@ public class Obj_Interaction : MonoBehaviour
 
     #region Object Interaction
 
+    [Header ("Interaction Paramaters")]
+
+    private float CURRENT_HoldDistance;
+    private readonly float DEFAULT_HoldDistance = 1.5f;
+    private readonly float MIN_HoldDistance = .5f;
+    private readonly float MAX_HoldDistance = 2.00f;
+    private readonly float HoldDistance_Increment = .1f;
+
+    [SerializeField] private float Hold_Force = 20f;
+    [SerializeField] private float ThrowForce = 15.0f;
+    [SerializeField] private float Break_Distance = 5f;
+
+    public Ray interactRay;
+    private RaycastHit hit;
     private bool holdingObj = false;
-    private GameObject obj;
+    private GameObject Held_Obj;
+    private Rigidbody HeldObject_Rigidbody;
+    private float HeldObject_Distance = 0f;
+    private Transform HeldObject_Transform;
 
     #endregion
 
@@ -84,41 +94,43 @@ public class Obj_Interaction : MonoBehaviour
             if (!holdingObj)
             {
 
-                if (Physics.Raycast(interactRay, out hit, playerInteractionRadius, objectLayerMask))
+                if (Physics.Raycast(interactRay, out hit, CURRENT_HoldDistance, objectLayerMask))
                 {
                     // If the cooldown of the players mouse click is zero, then we print a message, then restart the cooldown
                     if (hit.collider)
                     {
                         //Get the game object from the RaycastHit and get the interactable object script component
-                        obj = hit.transform.gameObject;
-                        switch(obj.tag){
+                        Held_Obj = hit.transform.gameObject;
+                        switch(Held_Obj.tag){
                             case "Pickup":
-                                obj.GetComponent<PickupBehavior>().pickup(this.gameObject);
+                                Held_Obj.GetComponent<PickupBehavior>().pickup();
+				HeldObject_Rigidbody = Held_Obj.GetComponent<Rigidbody>();
+				HeldObject_Transform = Held_Obj.transform;
                                 holdingObj = true;
                                 break;
-			    case "Chest":
-				obj.GetComponent<Activate>().activate();
-				break;
+				//Add additional logic here for items that can be interacted with
                         }
                         mouseClickCooldownRemaining = mouseClickCooldown;
                     }
                 }
             }
-            //if the player is holding an object then we just call the current objects pickup script, dropping the object, and resettinga cooldown
-            else
+            else // Dropping Object if holding one
             {
 
-                obj.GetComponent<PickupBehavior>().pickup(this.gameObject);
+		HeldObject_Transform = null;
+		HeldObject_Rigidbody = null;
                 holdingObj = false;
+                Held_Obj.GetComponent<PickupBehavior>().drop();
 
                 mouseClickCooldownRemaining = mouseClickCooldown;
             }
         }
-        else if(Input.GetMouseButton(2) && holdingObj){ // Middle Mouse
+        else if(Input.GetMouseButton(2) && holdingObj){ // Throw object if holding one
 
-            //Throw Object 
-            obj.GetComponent<PickupBehavior>().ThrowInDirection(interactRay.direction);
-            holdingObj = false;
+		HeldObject_Transform = null;
+		HeldObject_Rigidbody = null;
+                holdingObj = false;
+		Held_Obj.GetComponent<PickupBehavior>().ThrowInDirection(interactRay.direction, ThrowForce);
 
         }
 
@@ -138,7 +150,31 @@ public class Obj_Interaction : MonoBehaviour
         
         #endregion
 
-        Debug.DrawRay(interactRay.origin, interactRay.direction * playerInteractionRadius, Color.blue);
+	#region Handling Object Manipulation
+
+	if(holdingObj){
+
+		Vector3 holdPos = interactRay.GetPoint(CURRENT_HoldDistance);
+
+		HeldObject_Distance = Vector3.Distance(holdPos, HeldObject_Transform.position);
+
+		Vector3 Move_Direction = holdPos - HeldObject_Transform.position;
+		if (HeldObject_Distance > .1) HeldObject_Rigidbody.AddForce(Move_Direction * Hold_Force);
+
+		Debug.DrawRay(HeldObject_Transform.position, Move_Direction.normalized, Color.green);
+
+		if(HeldObject_Distance > Break_Distance){
+			HeldObject_Transform = null;
+			HeldObject_Rigidbody = null;
+			holdingObj = false;
+			Held_Obj.GetComponent<PickupBehavior>().drop();
+		}
+
+	}
+
+	#endregion
+
+        Debug.DrawRay(interactRay.origin, interactRay.direction * CURRENT_HoldDistance, Color.blue);
 
     }
 
@@ -149,7 +185,7 @@ public class Obj_Interaction : MonoBehaviour
         #region Dynamic Reticle Changing
 
         //Looking to see if ray hits an interactable object
-        if (Physics.Raycast(interactRay, playerInteractionRadius, objectLayerMask) || holdingObj)
+        if (holdingObj || Physics.Raycast(interactRay, CURRENT_HoldDistance, objectLayerMask) )
         {
 
 
@@ -177,26 +213,26 @@ public class Obj_Interaction : MonoBehaviour
         #region Pushing and pulling object
         if(holdingObj){
 
-            playerInteractionRadius += Input.mouseScrollDelta.y * ScrollObjHoldOffset;
-            playerInteractionRadius = Mathf.Clamp(playerInteractionRadius, MinimumHoldDistance, MaximumHoldDistance);
+            CURRENT_HoldDistance += Input.mouseScrollDelta.y * HoldDistance_Increment;
+            CURRENT_HoldDistance = Mathf.Clamp(CURRENT_HoldDistance, MIN_HoldDistance, MAX_HoldDistance);
 
         }
         else {
 
-            playerInteractionRadius = DefaultHoldDistance;
+            CURRENT_HoldDistance = DEFAULT_HoldDistance;
 
         }
         #endregion
     }
 
-    public void Fade(bool fadein){
 
-        StartCoroutine(FadeScreen(fadein));
+    public void Fade(bool fadeIn){
 
+        StartCoroutine(FadeScreen(fadeIn));
     }
 
 
-    IEnumerator FadeScreen(bool fadeIn){
+    public IEnumerator FadeScreen(bool fadeIn){
 
         if(fadeIn){
 

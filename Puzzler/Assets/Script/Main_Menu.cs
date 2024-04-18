@@ -65,7 +65,7 @@ public class Main_Menu : MonoBehaviour
 		if(value == 0) SetValue = -80f;
 		else SetValue = value * 30 -20;
 
-		if(mixer.SetFloat(MixerName,SetValue)) Debug.Log("Set New Audio Successfully");
+		if(mixer.SetFloat(MixerName, SetValue)) Debug.Log("Set New Audio Successfully");
 		else Debug.Log("WHY GOD WHY, PLEASE NO, WHY DID YOU GIVE ME BAD INFORMATION?!?!? What am I gonna tell my wife.......");
 
 	}

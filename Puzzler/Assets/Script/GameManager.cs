@@ -10,12 +10,14 @@ public class GameManager : MonoBehaviour
     private int maxSceneNumber = 4;
     public AudioMixer mixer;
 
+    
+
     //NOTE: The game manager should be controlling all of the saving/loading user progress, loading levels, and all other constant things.
     //very little should actually interact with game manager only to ask it to load the next level and to complete all of the other assoctiated processes.
 
     public void Start(){
 
-
+		
 
     }
 
