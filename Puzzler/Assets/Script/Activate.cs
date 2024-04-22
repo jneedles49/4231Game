@@ -27,6 +27,12 @@ public class Activate : MonoBehaviour
 
                 break;
 
+		case "Chest":
+
+                    this.GetComponent<Animator>().SetTrigger("Open_Chest");
+                    if (!SoundPlayer.isPlaying) SoundPlayer.Play();
+
+		break;
 
         }
     }

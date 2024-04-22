@@ -362,6 +362,9 @@ MonoBehaviour:
   speed: 7.5
   lookSensitivity: 2
   lookXlimit: 45
+  Footstep_Sounds:
+  - {fileID: 8300000, guid: 42e65e088b3f4374e851b8dbd38f3df9, type: 3}
+  - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}
 --- !u!114 &3590619693937759639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,7 +378,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 6222623564302358323}
-  playerInteractionRadius: 0
+  Hold_Force: 20
+  ThrowForce: 15
+  Break_Distance: 5
   reticle: {fileID: 1170368941438321498}
   HighlightColor: {r: 1, g: 1, b: 1, a: 1}
   normalColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -389,10 +394,10 @@ AudioSource:
   m_GameObject: {fileID: 4653206848481727435}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -2251217744577601235, guid: c4717d48ae28ce549969df8417880267, type: 2}
+  OutputAudioMixerGroup: {fileID: 3452237489147035363, guid: c4717d48ae28ce549969df8417880267, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -436,7 +441,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

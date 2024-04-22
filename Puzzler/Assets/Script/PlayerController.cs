@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 7.5f;
     [SerializeField] private float lookSensitivity = 2.0f;
     [SerializeField] private float lookXlimit = 45.0f;
+    [SerializeField] private List<AudioClip> Footstep_Sounds;
+    private int Current_Step_Track = 0;
+    private AudioSource Footstep_Audio;
     float rotation_x = 0;
     float gravity = 20.0f;
     Vector3 MoveDirection = Vector3.zero;
@@ -24,6 +27,9 @@ public class PlayerController : MonoBehaviour
         playerController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;  
+	Footstep_Audio = this.GetComponent<AudioSource>();
+
+	if(Footstep_Sounds.Count > 0) Footstep_Audio.clip = Footstep_Sounds[0];
     }
 
     // Update is called once per frame
@@ -58,6 +64,20 @@ public class PlayerController : MonoBehaviour
         //Obtaining current speed values
         float spd_x = speed * Input.GetAxis("Vertical");
         float spd_y = speed * Input.GetAxis("Horizontal");
+
+	if(spd_x > 0 || spd_y > 0){ 
+
+		if(!Footstep_Audio.isPlaying){
+
+			Footstep_Audio.clip = Footstep_Sounds[Current_Step_Track];
+			Footstep_Audio.Play();
+			Current_Step_Track++;
+			if (Current_Step_Track >= Footstep_Sounds.Count) Current_Step_Track = 0;
+
+		}
+
+	}
+	else if(Footstep_Audio.isPlaying) Footstep_Audio.Stop();
 
         //Getting the pre-adjusted y value before speed is applied to move direction
         float movementDirectionY = MoveDirection.y;

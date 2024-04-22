@@ -4,11 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 
+[RequireComponent(typeof(AudioSource))]
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject player;
+    [SerializeField] private AudioClip MusicTrack;
     private int maxSceneNumber = 4;
     public AudioMixer mixer;
+    private AudioSource Music_Player;
 
     
 
@@ -17,7 +20,9 @@ public class GameManager : MonoBehaviour
 
     public void Start(){
 
-		
+	    Music_Player = this.GetComponent<AudioSource>();
+	    Music_Player.clip = MusicTrack;
+	    Music_Player.Play();
 
     }
 

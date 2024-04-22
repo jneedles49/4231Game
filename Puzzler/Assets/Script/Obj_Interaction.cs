@@ -109,6 +109,9 @@ public class Obj_Interaction : MonoBehaviour
                                 holdingObj = true;
                                 break;
 				//Add additional logic here for items that can be interacted with
+			    case "Chest":
+				Held_Obj.GetComponent<Activate>().activate();
+				break;
                         }
                         mouseClickCooldownRemaining = mouseClickCooldown;
                     }
