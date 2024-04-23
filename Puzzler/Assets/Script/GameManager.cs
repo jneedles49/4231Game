@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
             player.GetComponent<Obj_Interaction>().Fade(false);
 
             //If the SceneNumber value doesn't exist then we create it.
-            if (!PlayerPrefs.HasKey("SceneNumber")) PlayerPrefs.SetInt("SceneNumber", 0);
+            if (!PlayerPrefs.HasKey("SceneNumber")) PlayerPrefs.SetInt("SceneNumber", 1);
         }
 
         //Getting SceneNumber
