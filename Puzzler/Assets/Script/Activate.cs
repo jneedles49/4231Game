@@ -30,6 +30,7 @@ public class Activate : MonoBehaviour
 		case "Chest":
 
                     this.GetComponent<Animator>().SetTrigger("Open_Chest");
+                    this.GetComponent<BoxCollider>().enabled = false;
                     if (!SoundPlayer.isPlaying) SoundPlayer.Play();
 
 		break;
