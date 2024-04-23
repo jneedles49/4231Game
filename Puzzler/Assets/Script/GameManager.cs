@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject player;
     [SerializeField] private AudioClip MusicTrack;
-    private int maxSceneNumber = 4;
+    private int maxSceneNumber;
     public AudioMixer mixer;
     private AudioSource Music_Player;
 
@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 	    Music_Player = this.GetComponent<AudioSource>();
 	    Music_Player.clip = MusicTrack;
 	    Music_Player.Play();
+	    maxSceneNumber = 4;
 
     }
 
