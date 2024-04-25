@@ -308,6 +308,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4653206848481727435, guid: 9d785affe342ed244892c078e009338a, type: 3}
   m_PrefabInstance: {fileID: 602879621}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &668295308 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2030706400593644637, guid: 9d785affe342ed244892c078e009338a, type: 3}
+  m_PrefabInstance: {fileID: 602879621}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d11f0979f8e2ce34296aa886db9f2d01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &675322963
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -500,6 +511,10 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 7929591354206149158, guid: 4156bfa2af7e18945a28b022cb582114, type: 3}
+      propertyPath: Hud
+      value: 
+      objectReference: {fileID: 668295308}
+    - target: {fileID: 7929591354206149158, guid: 4156bfa2af7e18945a28b022cb582114, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 602879622}
@@ -548,11 +563,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4156bfa2af7e18945a28b022cb582114, type: 3}
---- !u!1 &1458535891 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3020806825115531606, guid: 4156bfa2af7e18945a28b022cb582114, type: 3}
+--- !u!114 &1458535892 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7929591354206149158, guid: 4156bfa2af7e18945a28b022cb582114, type: 3}
   m_PrefabInstance: {fileID: 1395179536}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17633994c163bfe4387ea87ea1ead4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1625192655
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -623,9 +644,9 @@ PrefabInstance:
       value: Room_Layout_1
       objectReference: {fileID: 0}
     - target: {fileID: 4728531382623414369, guid: 20713626d64673f458ae03477bb91bc2, type: 3}
-      propertyPath: GameManager
+      propertyPath: GameManage
       value: 
-      objectReference: {fileID: 1458535891}
+      objectReference: {fileID: 1458535892}
     - target: {fileID: 5511586574879112679, guid: 20713626d64673f458ae03477bb91bc2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

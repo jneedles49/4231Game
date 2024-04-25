@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SceneChanger : MonoBehaviour
 {
-    [SerializeField] private GameObject GameManager;
+    [SerializeField] private GameManager GameManage;
     private bool loading = false;
 
     private void OnTriggerStay(Collider other) {
@@ -12,7 +12,7 @@ public class SceneChanger : MonoBehaviour
 
             //We should have it to where we tell the player to start fading out and the we wait the fade out duration until we load the next scene
             loading = true;
-            GameManager.GetComponent<GameManager>().LoadNextLevel();
+            GameManage.LoadNextLevel();
 
         }
 
