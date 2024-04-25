@@ -14,8 +14,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float lookSensitivity = 2.0f;
     [SerializeField] private float lookXlimit = 45.0f;
     [SerializeField] private List<AudioClip> Footstep_Sounds;
-    private int Current_Step_Track = 0;
     private AudioSource Footstep_Audio;
+    private int Current_Step_Track = 0;
+
+    [Header("HUD")]
+    [SerializeField] private HudManager Hud;
+
     float rotation_x = 0;
     float gravity = 20.0f;
     Vector3 MoveDirection = Vector3.zero;
@@ -28,8 +32,6 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;  
 	Footstep_Audio = this.GetComponent<AudioSource>();
-
-	if(Footstep_Sounds.Count > 0) Footstep_Audio.clip = Footstep_Sounds[0];
     }
 
     // Update is called once per frame
@@ -42,6 +44,7 @@ public class PlayerController : MonoBehaviour
 			Cursor.visible = true;
 			Time.timeScale = 0;
 			Paused = true;
+			if(Hud) Hud.Pause();
 
 		}
 		else{
@@ -49,6 +52,7 @@ public class PlayerController : MonoBehaviour
 			Cursor.visible = false;  
 			Time.timeScale = 1;
 			Paused = false;
+			if(Hud) Hud.UnPause();
 		}
 	}
 

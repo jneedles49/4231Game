@@ -13,24 +13,27 @@ public class BetterButton: Selectable, IPointerDownHandler
     {
 
         Back,
-	    NewGame,
+	NewGame,
         Options,
         Continue,
-        Quit
+        Quit,
+	Resume,
+	ToMenu
 
 
     };
 
     [SerializeField] private GameObject Main_Menu_Obj;
-    [SerializeField] private GameObject TextObj;
+    [SerializeField] private GameObject Pause_Menu_Obj;
+    [SerializeField] private TextMeshProUGUI textStyle;
     [SerializeField] private ButtonType buttonType;
-    TextMeshProUGUI textStyle;
-    Main_Menu MenuScript;
+    private Main_Menu MenuScript;
+    private Pause_Menu Pause_Script;
 
     void Start(){
 
-	 textStyle =TextObj.GetComponent<TextMeshProUGUI>(); 
-	 MenuScript = Main_Menu_Obj.GetComponent<Main_Menu>();
+	 if(Main_Menu_Obj) MenuScript = Main_Menu_Obj.GetComponent<Main_Menu>();
+	 if(Pause_Menu_Obj) Pause_Script = Pause_Menu_Obj.GetComponent<Pause_Menu>();
 
     }
 
@@ -61,36 +64,49 @@ public class BetterButton: Selectable, IPointerDownHandler
 
             case ButtonType.Options:
 
-                MenuScript.ToOptions();
+                if (MenuScript) MenuScript.ToOptions();
+		if (Pause_Script) Pause_Script.ToOptionsMenu();
 
 		break;
 
 	    case ButtonType.Continue:
 
-		MenuScript.Continue();
+		if (MenuScript)MenuScript.Continue();
 
 		break;
 
 	    case ButtonType.Quit:
 
-		Application.Quit();
+		if (MenuScript)Application.Quit();
 
 		break;
 
 	    case ButtonType.Back:
 
-		MenuScript.GoBack();
+		if (MenuScript)MenuScript.GoBack();
+		if (Pause_Script) Pause_Script.ToHome();
 
 		break;
 
 	    case ButtonType.NewGame:
 
-	    	MenuScript.NewGame();
+	    	if (MenuScript)MenuScript.NewGame();
 
 		break;
 
             //ADD ANY OTHER BUTTON TYPES HERE
 
+            case ButtonType.Resume:
+
+		if (Pause_Script) Pause_Script.ResumeGame();
+
+		break;
+
+            case ButtonType.ToMenu:
+
+		if (Pause_Script) Pause_Script.QuitToMenu();
+
+		break;
 
         };
 

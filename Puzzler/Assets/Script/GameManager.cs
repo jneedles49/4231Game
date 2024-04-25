@@ -4,14 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 
-[RequireComponent(typeof(AudioSource))]
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-    [SerializeField] private AudioClip MusicTrack;
-    private int maxSceneNumber;
-    public AudioMixer mixer;
-    private AudioSource Music_Player;
+	[SerializeField] private HudManager Hud;
+	private int maxSceneNumber; 
+	public AudioMixer mixer;
 
     
 
@@ -20,18 +17,15 @@ public class GameManager : MonoBehaviour
 
     public void Start(){
 
-	    Music_Player = this.GetComponent<AudioSource>();
-	    Music_Player.clip = MusicTrack;
-	    Music_Player.Play();
-	    maxSceneNumber = 4;
+	maxSceneNumber = SceneManager.sceneCount;	
 
     }
 
     public void LoadNextLevel(){
 
-        if(player){
+        if(Hud){
             //Fadeout for the player
-            player.GetComponent<Obj_Interaction>().Fade(false);
+	    Hud.Fade(false);
 
             //If the SceneNumber value doesn't exist then we create it.
             if (!PlayerPrefs.HasKey("SceneNumber")) PlayerPrefs.SetInt("SceneNumber", 1);

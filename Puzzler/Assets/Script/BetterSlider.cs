@@ -29,6 +29,7 @@ public class BetterSlider : MonoBehaviour, IPointerUpHandler
     private string SaveLoadName;
     private float savedValue;
     public Main_Menu menuScript;
+    [SerializeField] private Pause_Menu Pause_Script;
 
     void Start(){
 
@@ -92,7 +93,9 @@ public class BetterSlider : MonoBehaviour, IPointerUpHandler
             Debug.Log("Value Adjusted: Saving current slider value: " + savedValue);
 
             PlayerPrefs.SetFloat(SaveLoadName, savedValue);
-	    menuScript.AdjustAudioMixer(SaveLoadName, savedValue);
+	    if(menuScript)menuScript.AdjustAudioMixer(SaveLoadName, savedValue);
+	    if(Pause_Script)Pause_Script.AdjustAudioMixer(SaveLoadName, savedValue);
+
 
             SliderAudioSource.clip = audioClip;
             SliderAudioSource.Play();

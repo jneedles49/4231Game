@@ -231,6 +231,7 @@ MonoBehaviour:
   audioClip: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   text: {fileID: 1257343568}
   menuScript: {fileID: 374454995}
+  Pause_Script: {fileID: 0}
 --- !u!82 &2419421
 AudioSource:
   m_ObjectHideFlags: 0
@@ -676,7 +677,8 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 118938419}
   Main_Menu_Obj: {fileID: 374454994}
-  TextObj: {fileID: 1743725713}
+  Pause_Menu_Obj: {fileID: 0}
+  textStyle: {fileID: 1743725715}
   buttonType: 2
 --- !u!114 &118938419
 MonoBehaviour:
@@ -862,7 +864,7 @@ GameObject:
   - component: {fileID: 151628362}
   - component: {fileID: 151628361}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Options-Titles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1715,7 +1717,8 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 437285874}
   Main_Menu_Obj: {fileID: 374454994}
-  TextObj: {fileID: 26009126}
+  Pause_Menu_Obj: {fileID: 0}
+  textStyle: {fileID: 26009128}
   buttonType: 4
 --- !u!114 &437285874
 MonoBehaviour:
@@ -2669,6 +2672,7 @@ MonoBehaviour:
   audioClip: {fileID: 8300000, guid: 013c7fe54d7509043a55d07cd3c6caca, type: 3}
   text: {fileID: 1162763614}
   menuScript: {fileID: 374454995}
+  Pause_Script: {fileID: 0}
 --- !u!82 &1158052102
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2960,7 +2964,8 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1208325672}
   Main_Menu_Obj: {fileID: 374454994}
-  TextObj: {fileID: 1966147178}
+  Pause_Menu_Obj: {fileID: 0}
+  textStyle: {fileID: 1966147179}
   buttonType: 3
 --- !u!224 &1208325671
 RectTransform:
@@ -3235,7 +3240,8 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1330013921}
   Main_Menu_Obj: {fileID: 374454994}
-  TextObj: {fileID: 677175325}
+  Pause_Menu_Obj: {fileID: 0}
+  textStyle: {fileID: 677175327}
   buttonType: 1
 --- !u!114 &1330013921
 MonoBehaviour:
@@ -4250,6 +4256,7 @@ MonoBehaviour:
   audioClip: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   text: {fileID: 627267436}
   menuScript: {fileID: 374454995}
+  Pause_Script: {fileID: 0}
 --- !u!1 &1966147178
 GameObject:
   m_ObjectHideFlags: 0
@@ -4635,7 +4642,8 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 2134828204}
   Main_Menu_Obj: {fileID: 374454994}
-  TextObj: {fileID: 421484890}
+  Pause_Menu_Obj: {fileID: 0}
+  textStyle: {fileID: 421484892}
   buttonType: 0
 --- !u!114 &2134828204
 MonoBehaviour:

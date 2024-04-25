@@ -47,19 +47,7 @@ public class Obj_Interaction : MonoBehaviour
 
     [Header ("HUD")]
 
-    public GameObject reticle;
-    private RectTransform reticleTransform;
-    private RawImage reticleColor;
-
-    [SerializeField]private Color HighlightColor = Color.white;
-    [SerializeField]private Color normalColor = Color.grey;
-
-    private readonly Vector3 ReticleMaxSize = new Vector3(.3f,.3f,.3f);
-    private readonly Vector3 ReticleMinSize = new Vector3(.15f,.15f,.15f);
-
-    [SerializeField] private GameObject FadeObj;
-    private Image image;
-
+	    [SerializeField] private HudManager Hud;
     #endregion
 
     // Start is called before the first frame update
@@ -68,12 +56,6 @@ public class Obj_Interaction : MonoBehaviour
 
         //gets the screen width and height
         pos = new Vector3(Screen.width / 2, Screen.height / 2, 7);
-        reticleTransform = reticle.GetComponent<RectTransform>();
-        reticleColor = reticle.GetComponent<RawImage>();
-
-        //Fading In
-        image = FadeObj.GetComponent<Image>();
-        Fade(true);
 
     }
 
@@ -109,9 +91,6 @@ public class Obj_Interaction : MonoBehaviour
                                 holdingObj = true;
                                 break;
 				//Add additional logic here for items that can be interacted with
-			    case "Chest":
-				Held_Obj.GetComponent<Activate>().activate();
-				break;
                         }
                         mouseClickCooldownRemaining = mouseClickCooldown;
                     }
@@ -191,22 +170,12 @@ public class Obj_Interaction : MonoBehaviour
         if (holdingObj || Physics.Raycast(interactRay, CURRENT_HoldDistance, objectLayerMask) )
         {
 
+		if(Hud) Hud.ReticleSize(true);
 
-            //Adjust the size and color of the recticle to highlight when it is over a interactable object
-            if (reticleTransform.localScale.x != ReticleMaxSize.x)
-            {
-                reticleTransform.localScale = ReticleMaxSize;
-                reticleColor.color = HighlightColor;
-            }
 
         } else{
 
-            //if the player is not looking at an interactable object then we set the reticle back to normal
-            if (reticleTransform.localScale.x != ReticleMinSize.x)
-            {
-                reticleTransform.localScale = ReticleMinSize;
-                reticleColor.color = HighlightColor;
-            }
+		if(Hud) Hud.ReticleSize(false);
 
         }
 
@@ -228,37 +197,5 @@ public class Obj_Interaction : MonoBehaviour
         #endregion
     }
 
-
-    public void Fade(bool fadeIn){
-
-        StartCoroutine(FadeScreen(fadeIn));
-    }
-
-
-    public IEnumerator FadeScreen(bool fadeIn){
-
-        if(fadeIn){
-
-            for(float i = 1; i >= 0; i -= Time.deltaTime){
-
-                image.color = new Color(0,0,0,i);
-                yield return null;   
-
-            }
-
-
-        }
-        else{
-
-            for(float i = 0; i <= 1; i += Time.deltaTime){
-
-                image.color = new Color(0,0,0,i);
-                yield return null;   
-
-            }
-
-        }
-
-    }
 
 }
