@@ -47,8 +47,13 @@ public class Duck : MonoBehaviour
     {
 	    if(!isLooking){
 
+		    Vector3 Player_Pos = Player_Trans.position;
+		    Player_Pos.y = 0;
+		    Vector3 Current_Pos = trans.position;
+		    Current_Pos.y = 0;
+
 		    //Movement
-		    Vector3 Move_Direction =  Player_Trans.position - trans.position;
+		    Vector3 Move_Direction =  Player_Pos - Current_Pos; 
 		    Move_Direction.Normalize();
 
 		    Vector3 Target_Direction = Move_Direction;
