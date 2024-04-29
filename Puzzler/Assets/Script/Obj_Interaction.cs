@@ -90,6 +90,9 @@ public class Obj_Interaction : MonoBehaviour
 				HeldObject_Transform = Held_Obj.transform;
                                 holdingObj = true;
                                 break;
+			    case "Chest":
+				Held_Obj.GetComponent<Activate>().activate();
+				break;
 				//Add additional logic here for items that can be interacted with
                         }
                         mouseClickCooldownRemaining = mouseClickCooldown;
