@@ -674,11 +674,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f1cf3fcc1acb1b4eb479d3826dfde11, type: 3}
---- !u!1 &1445845465 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2368970302657720359, guid: f00836089344d7445bfdd55b0b26e4bb, type: 3}
-  m_PrefabInstance: {fileID: 1803039288}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1552378743
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -947,63 +942,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2b1040f29fd5ed4bb531ba5954b983f, type: 3}
---- !u!1001 &1803039288
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2368970302657720359, guid: f00836089344d7445bfdd55b0b26e4bb, type: 3}
-      propertyPath: m_Name
-      value: BetterDoor
-      objectReference: {fileID: 0}
-    - target: {fileID: 3146772990372129437, guid: f00836089344d7445bfdd55b0b26e4bb, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -19
-      objectReference: {fileID: 0}
-    - target: {fileID: 3146772990372129437, guid: f00836089344d7445bfdd55b0b26e4bb, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.00000023841858
-      objectReference: {fileID: 0}
-    - target: {fileID: 3146772990372129437, guid: f00836089344d7445bfdd55b0b26e4bb, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3146772990372129437, guid: f00836089344d7445bfdd55b0b26e4bb, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 3146772990372129437, guid: f00836089344d7445bfdd55b0b26e4bb, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3146772990372129437, guid: f00836089344d7445bfdd55b0b26e4bb, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 3146772990372129437, guid: f00836089344d7445bfdd55b0b26e4bb, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3146772990372129437, guid: f00836089344d7445bfdd55b0b26e4bb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3146772990372129437, guid: f00836089344d7445bfdd55b0b26e4bb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 3146772990372129437, guid: f00836089344d7445bfdd55b0b26e4bb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f00836089344d7445bfdd55b0b26e4bb, type: 3}
 --- !u!1001 &1820650559
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1015,7 +953,7 @@ PrefabInstance:
     - target: {fileID: 263167670505970070, guid: 0ade8020cd41c6f4c979d5ecb6c3a605, type: 3}
       propertyPath: connectedObject
       value: 
-      objectReference: {fileID: 1445845465}
+      objectReference: {fileID: 1955912063}
     - target: {fileID: 3961530337137943746, guid: 0ade8020cd41c6f4c979d5ecb6c3a605, type: 3}
       propertyPath: m_Name
       value: BetterButton
@@ -1187,6 +1125,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 212130628459115170, guid: 9d785affe342ed244892c078e009338a, type: 3}
   m_PrefabInstance: {fileID: 1848536010}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1955912063 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4131899282333919918, guid: 20713626d64673f458ae03477bb91bc2, type: 3}
+  m_PrefabInstance: {fileID: 540977313}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1999290537
 PrefabInstance:
@@ -1512,7 +1455,6 @@ SceneRoots:
   - {fileID: 1586677500}
   - {fileID: 1820650559}
   - {fileID: 505465060}
-  - {fileID: 1803039288}
   - {fileID: 1247634375}
   - {fileID: 184930063}
   - {fileID: 1698064454}
