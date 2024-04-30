@@ -27,13 +27,14 @@ public class Activate : MonoBehaviour
 
                 break;
 
-		case "Chest":
+		        case "Chest":
 
+                    Debug.Log("Click");
                     this.GetComponent<Animator>().SetTrigger("Open_Chest");
                     this.GetComponent<BoxCollider>().enabled = false;
                     if (!SoundPlayer.isPlaying) SoundPlayer.Play();
 
-		break;
+		        break;
 
         }
     }
