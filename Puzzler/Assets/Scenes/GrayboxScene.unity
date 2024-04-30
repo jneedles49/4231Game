@@ -1211,10 +1211,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3999580963928901587, guid: dd93aeba0a541d84cb47f4207fb74f92, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3999580963928901587, guid: dd93aeba0a541d84cb47f4207fb74f92, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.5
       objectReference: {fileID: 0}
@@ -1254,16 +1250,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4095121760318727423, guid: dd93aeba0a541d84cb47f4207fb74f92, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 576
-      objectReference: {fileID: 0}
     - target: {fileID: 4491956135168582328, guid: dd93aeba0a541d84cb47f4207fb74f92, type: 3}
       propertyPath: m_Name
-      value: ShadowWall
-      objectReference: {fileID: 0}
-    - target: {fileID: 4491956135168582328, guid: dd93aeba0a541d84cb47f4207fb74f92, type: 3}
-      propertyPath: m_TagString
       value: ShadowWall
       objectReference: {fileID: 0}
     m_RemovedComponents: []

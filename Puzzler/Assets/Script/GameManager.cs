@@ -31,15 +31,12 @@ public class GameManager : MonoBehaviour
             if (!PlayerPrefs.HasKey("SceneNumber")) PlayerPrefs.SetInt("SceneNumber", 1);
         }
 
-        //Getting SceneNumber
-        int NextSceneNumber = PlayerPrefs.GetInt("SceneNumber") + 1;
-        Debug.Log("Loading Scene Number: " + NextSceneNumber);
+	Scene Current_Scene = SceneManager.GetActiveScene();
+	int NextSceneNumber = Current_Scene.buildIndex + 1;
 
         //Incrementing SceneNumber on disk
         if(NextSceneNumber < maxSceneNumber - 1) PlayerPrefs.SetInt("SceneNumber", NextSceneNumber);
         else PlayerPrefs.SetInt("SceneNumber", maxSceneNumber - 1);
-
-
         //Other Code that we want to throw goes here 
 
 
