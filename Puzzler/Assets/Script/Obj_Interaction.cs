@@ -110,7 +110,7 @@ public class Obj_Interaction : MonoBehaviour
                 mouseClickCooldownRemaining = mouseClickCooldown;
             }
         }
-        else if(Input.GetMouseButton(2) && holdingObj){ // Throw object if holding one
+        else if(Input.GetMouseButton(2) || Input.GetKeyDown(KeyCode.F) && holdingObj){ // Throw object if holding one
 
 		HeldObject_Transform = null;
 		HeldObject_Rigidbody = null;
