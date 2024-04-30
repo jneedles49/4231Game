@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LargeTiledFloor
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 48cf3843b57188347a05997db830e849, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
