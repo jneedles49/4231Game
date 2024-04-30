@@ -150,5 +150,5 @@ MonoBehaviour:
   Move_X: 1
   Move_Y: 1
   Move_Z: 0
-  Wall_Collider: {fileID: 0}
-  Button_Collider: {fileID: 0}
+  Wall_Collider: {fileID: 5591780445835702628, guid: 3cc5f7c94f4c6474ab85782a866b424a, type: 3}
+  Button_Collider: {fileID: 1132272835292737154, guid: 9c477b7ab4a872140be6d95a3360c82b, type: 3}
