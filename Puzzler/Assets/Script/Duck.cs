@@ -12,6 +12,8 @@ public class Duck : MonoBehaviour
 	private Transform trans;
 	private Rigidbody rigid;
 	private AudioSource Audio_Player;
+	private readonly float Pause_Timer = 180;
+	private float current_Timer = 0;
 	[Header("Target")]
 	[SerializeField] private Transform Player_Trans;
 	[Header("Attributes")]
@@ -47,6 +49,13 @@ public class Duck : MonoBehaviour
     {
 	    if(!isLooking){
 
+			//Pausing the duck
+			if (current_Timer > 0){
+
+				current_Timer--;	
+				return;
+			}
+
 		    Vector3 Player_Pos = Player_Trans.position;
 		    Player_Pos.y = 0;
 		    Vector3 Current_Pos = trans.position;
@@ -78,6 +87,7 @@ public class Duck : MonoBehaviour
 
 	    if (other.gameObject.tag == "User") Debug.Log("Got Ya!");
 	    if (!Audio_Player.isPlaying) Audio_Player.Play();
+	    current_Timer = Pause_Timer;
 
     }
 }
